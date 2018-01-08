@@ -13,9 +13,9 @@ const (
 )
 
 func SessionCheck(ctx context.Context) {
-	sid := ctx.Params().Get("sid")
+	sid := ctx.Params().Get("uid")
 	if sid == "" {
-		SendResponse(ctx, http.StatusUnauthorized, "get sid failed", "")
+		SendResponse(ctx, http.StatusUnauthorized, "get uid failed", "")
 		return
 	}
 

@@ -9,9 +9,11 @@ var api router.Party
 
 func init() {
 	irisApp := app.GetIrisApp()
-	api = irisApp.Party("/api/v2/fortify")
+	api = irisApp.Party("/api/v2/notify")
 
+	// registe path: /users
 	user()
 
-	energy()
+	// registe path: /login
+	login()
 }

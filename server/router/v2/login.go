@@ -4,10 +4,6 @@ import (
 	"github.com/xuebing1110/notify/server/handlers"
 )
 
-func user() {
-	// user
-	api.Post("/users", handlers.UserRegiste)
-
-	// session
+func login() {
 	api.Post("/login", handlers.UserLogin)
 }
