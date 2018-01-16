@@ -1,7 +1,7 @@
 package redis
 
 import (
-	"github.com/xuebing1110/fortify/notify/models"
+	"github.com/xuebing1110/notify/pkg/models"
 )
 
 const (

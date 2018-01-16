@@ -4,7 +4,7 @@ import (
 	"os"
 
 	goredis "github.com/go-redis/redis"
-	"github.com/xuebing1110/fortify/notify/storage"
+	"github.com/xuebing1110/notify/pkg/storage"
 )
 
 type RedisStorage struct {
