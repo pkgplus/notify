@@ -7,10 +7,20 @@ import (
 
 func SendResponse(ctx context.Context, code int, msg, detail string) {
 	resp := &models.Response{
-		code,
-		msg,
-		detail,
-		nil,
+		Code:    code,
+		Message: msg,
+		Detail:  detail,
+	}
+	ctx.StatusCode(resp.Code)
+	ctx.JSON(resp)
+}
+
+func SendNormalResponse(ctx context.Context, data interface{}) {
+	resp := &models.Response{
+		Code:    200,
+		Message: "OK",
+		Detail:  "",
+		Data:    data,
 	}
 	ctx.StatusCode(resp.Code)
 	ctx.JSON(resp)

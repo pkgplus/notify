@@ -48,7 +48,8 @@ func EneryCount(ctx context.Context) {
 	//  return
 	// }
 
-	ctx.JSON(map[string]int64{"count": storage.GlobalStore.GetEnergyCount(uid)})
+	data := map[string]int64{"count": storage.GlobalStore.GetEnergyCount(uid)}
+	SendNormalResponse(ctx, data)
 }
 
 func PopEnergy(ctx context.Context) {
@@ -67,6 +68,7 @@ func PopEnergy(ctx context.Context) {
 	if energy == "" {
 		SendResponse(ctx, http.StatusBadRequest, "no energy to pop", "")
 	} else {
-		ctx.JSON(map[string]string{"enery": energy})
+		data := map[string]string{"enery": energy}
+		SendNormalResponse(ctx, data)
 	}
 }

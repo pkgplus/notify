@@ -54,7 +54,7 @@ func UserLogin(ctx context.Context) {
 		return
 	}
 
-	ctx.JSON(&LoginResp{Session: sess_3rd})
+	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd})
 }
 
 func SessCheck(ctx context.Context) {
@@ -66,5 +66,5 @@ func SessCheck(ctx context.Context) {
 		return
 	}
 
-	ctx.JSON(resp)
+	SendNormalResponse(ctx, resp)
 }
