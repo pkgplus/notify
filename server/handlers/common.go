@@ -10,6 +10,7 @@ func SendResponse(ctx context.Context, code int, msg, detail string) {
 		code,
 		msg,
 		detail,
+		nil,
 	}
 	ctx.StatusCode(resp.Code)
 	ctx.JSON(resp)

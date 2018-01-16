@@ -7,7 +7,7 @@ import (
 	"github.com/xuebing1110/notify/server/app"
 
 	_ "github.com/xuebing1110/notify/pkg/storage/redis"
-	_ "github.com/xuebing1110/notify/server/router/v1"
+	_ "github.com/xuebing1110/notify/server/router/v2"
 )
 
 func main() {

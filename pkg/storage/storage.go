@@ -2,14 +2,14 @@ package storage
 
 import (
 	"github.com/xuebing1110/notify/pkg/models"
-	"github.com/xuebing1110/notify/pkg/wechat"
+	wxmodels "github.com/xuebing1110/notify/pkg/wechat/models"
 )
 
 var GlobalStore Storage
 
 type Storage interface {
-	SaveSession(sess_3rd string, sessInfo *wechat.SessionResp) error
-	QuerySession(sess_3rd string) (*wechat.SessionResp, error)
+	SaveSession(sess_3rd string, sessInfo *wxmodels.SessionResp) error
+	QuerySession(sess_3rd string) (*wxmodels.SessionResp, error)
 
 	UpsertUser(user models.User) error
 	AddUser(user models.User) error
