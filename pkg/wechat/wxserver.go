@@ -43,7 +43,7 @@ func SendMsg(t *wxmodels.TemplateMsg) error {
 
 func SendNotice(n *wxmodels.Notice) error {
 	// log.Println("prepare send message...")
-	log.Printf("get noitce %+v", n)
+	// log.Printf("get noitce %+v", n)
 	msg, err := NoticeToTemplateMsg(n)
 	if err != nil {
 		return err
