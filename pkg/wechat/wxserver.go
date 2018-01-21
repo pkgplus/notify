@@ -48,6 +48,7 @@ func SendNotice(n *wxmodels.Notice) error {
 		return err
 	}
 
+	log.Printf("send message %+v", msg)
 	wxErr := WxServer.SendMsg(msg)
 	if wxErr.Error() != nil {
 		log.Println(wxErr.ErrMsg)
