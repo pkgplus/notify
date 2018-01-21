@@ -20,5 +20,8 @@ func NoticeToTemplateMsg(n *wxmodels.Notice) (*wxmodels.TemplateMsg, error) {
 		return nil, err
 	}
 
-	return wxmodels.NewTemplateMsg(n.UserID, n.Template, energy, n.Values), nil
+	tmsg := wxmodels.NewTemplateMsg(n.UserID, n.Template, energy, n.Values)
+	tmsg.SetEmphasis(n.Emphasis)
+	tmsg.SetPage(tmsg.Page)
+	return tmsg, nil
 }
