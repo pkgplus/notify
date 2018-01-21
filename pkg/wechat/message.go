@@ -11,7 +11,7 @@ import (
 func NoticeToTemplateMsg(n *wxmodels.Notice) (*wxmodels.TemplateMsg, error) {
 	if n.Page == "" {
 		n.Page = "/pages/index/index"
-	} else if strings.Index(n.Page, "/") >= 0 {
+	} else if strings.Index(n.Page, "/") < 0 {
 		n.Page = fmt.Sprintf("/pages/%s/%s", n.Page, n.Page)
 	}
 
