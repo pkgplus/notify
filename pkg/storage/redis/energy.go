@@ -77,6 +77,6 @@ func (rs *RedisStorage) ExpireEnergy(uid string) error {
 	client := rs.Get()
 	defer client.Close()
 
-	_, err := client.Do("EXPIRE", ENERGY_PREFIX+uid, SEVEN_DAY/time.Second)
+	_, err := client.Do("EXPIRE", ENERGY_PREFIX+uid, int64(SEVEN_DAY/time.Second))
 	return err
 }

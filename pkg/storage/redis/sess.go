@@ -18,7 +18,7 @@ func (rs *RedisStorage) SaveSession(sess_3rd string, user_id string) error {
 		return err
 	}
 
-	_, err = client.Do("EXPIRE", SESS_PREFIX+sess_3rd, 24*time.Hour/time.Second)
+	_, err = client.Do("EXPIRE", SESS_PREFIX+sess_3rd, int64(24*time.Hour/time.Second))
 	if err != nil {
 		return err
 	}
