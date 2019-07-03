@@ -52,20 +52,9 @@ func UserLogin(ctx *gin.Context) {
 	// }
 
 	// storage
-	err = storage.GlobalStore.UpdateUser(
-		user_id,
-		map[string]interface{}{
-			"openid":  user_id,
-			"unionid": sessRet.Unionid,
-		},
-	)
-	if err != nil {
-		SendResponse(ctx, http.StatusInternalServerError, "save sess_3rd and sessinfo failed", err.Error())
-		return
-	}
 	err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
 	if err != nil {
-		SendResponse(ctx, http.StatusInternalServerError, "save sess_3rd and sessinfo failed", err.Error())
+		SendResponse(ctx, http.StatusInternalServerError, "save session failed", err.Error())
 		return
 	}
 
