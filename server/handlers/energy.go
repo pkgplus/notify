@@ -1,14 +1,14 @@
 package handlers
 
 import (
-	"github.com/kataras/iris/context"
+	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/storage"
 	"net/http"
 )
 
-func AddEnery(ctx context.Context) {
+func AddEnery(ctx *gin.Context) {
 	eneryMap := make(map[string]string)
-	err := ctx.ReadJSON(&eneryMap)
+	err := ctx.BindJSON(&eneryMap)
 	if err != nil {
 		SendResponse(ctx, http.StatusBadRequest, "parse json failed", err.Error())
 		return
@@ -35,7 +35,7 @@ func AddEnery(ctx context.Context) {
 	SendResponse(ctx, http.StatusOK, "OK", "")
 }
 
-func EneryCount(ctx context.Context) {
+func EneryCount(ctx *gin.Context) {
 	uid := getUID(ctx)
 	if uid == "" {
 		SendResponse(ctx, http.StatusInternalServerError, "get openid failed", "")
@@ -52,7 +52,7 @@ func EneryCount(ctx context.Context) {
 	SendNormalResponse(ctx, data)
 }
 
-func PopEnergy(ctx context.Context) {
+func PopEnergy(ctx *gin.Context) {
 	uid := getUID(ctx)
 	if uid == "" {
 		SendResponse(ctx, http.StatusInternalServerError, "get openid failed", "")

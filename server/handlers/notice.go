@@ -3,12 +3,12 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/kataras/iris/context"
+	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/wechat"
 	"github.com/xuebing1110/notify/pkg/wechat/models"
 )
 
-func SendNotice(ctx context.Context) {
+func SendNotice(ctx *gin.Context) {
 	uid := getUID(ctx)
 	if uid == "" {
 		SendResponse(ctx, http.StatusInternalServerError, "get uid failed", "")
@@ -17,7 +17,7 @@ func SendNotice(ctx context.Context) {
 
 	// create
 	n := new(models.Notice)
-	err := ctx.ReadJSON(n)
+	err := ctx.BindJSON(n)
 	if err != nil {
 		SendResponse(ctx, http.StatusBadRequest, "parse to notice failed", err.Error())
 		return

@@ -1,17 +1,13 @@
 package app
 
 import (
-	"github.com/kataras/iris"
+	"github.com/gin-gonic/gin"
 )
 
 var (
-	IrisApp *iris.Application
+	app = gin.New()
 )
 
-func init() {
-	IrisApp = iris.New()
-}
-
-func GetIrisApp() *iris.Application {
-	return IrisApp
+func GetApp() *gin.Engine {
+	return app
 }

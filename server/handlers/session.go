@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/kataras/iris/context"
+	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/storage"
 )
 
@@ -12,8 +12,8 @@ const (
 	CONTEXT_UNION_TAG  = "UnionID"
 )
 
-func SessionCheck(ctx context.Context) {
-	sid := ctx.Params().Get("uid")
+func SessionCheck(ctx *gin.Context) {
+	sid := ctx.Param("uid")
 	if sid == "" {
 		SendResponse(ctx, http.StatusUnauthorized, "get uid failed", "")
 		return
@@ -24,21 +24,21 @@ func SessionCheck(ctx context.Context) {
 		SendResponse(ctx, http.StatusUnauthorized, "session maybe expired,please login before sending a notice", err.Error())
 		return
 	}
-	ctx.Values().Set(CONTEXT_OPENID_TAG, resp.OpenID)
-	ctx.Values().Set(CONTEXT_UNION_TAG, resp.Unionid)
+	ctx.Set(CONTEXT_OPENID_TAG, resp.OpenID)
+	ctx.Set(CONTEXT_UNION_TAG, resp.Unionid)
 
 	ctx.Next()
 }
 
-func GetOpenID(ctx context.Context) string {
-	return ctx.Values().GetString(CONTEXT_OPENID_TAG)
+func GetOpenID(ctx *gin.Context) string {
+	return ctx.GetString(CONTEXT_OPENID_TAG)
 }
 
-func GetUnionID(ctx context.Context) string {
-	return ctx.Values().GetString(CONTEXT_UNION_TAG)
+func GetUnionID(ctx *gin.Context) string {
+	return ctx.GetString(CONTEXT_UNION_TAG)
 }
 
-func getUID(ctx context.Context) (uid string) {
-	// uid = ctx.Values().GetString(CONTEXT_UNION_TAG)
-	return ctx.Values().GetString(CONTEXT_OPENID_TAG)
+func getUID(ctx *gin.Context) (uid string) {
+	// uid = ctx.GetString(CONTEXT_UNION_TAG)
+	return ctx.GetString(CONTEXT_OPENID_TAG)
 }

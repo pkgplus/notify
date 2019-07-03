@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/kataras/iris/context"
+	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/models"
 	"github.com/xuebing1110/notify/pkg/storage"
 	"github.com/xuebing1110/notify/pkg/wechat"
@@ -18,11 +18,11 @@ type LoginResp struct {
 	Session string `json:"session"`
 }
 
-func UserLogin(ctx context.Context) {
+func UserLogin(ctx *gin.Context) {
 	lr := new(LoginReq)
 
 	// request
-	err := ctx.ReadJSON(lr)
+	err := ctx.BindJSON(lr)
 	if err != nil {
 		SendResponse(ctx, http.StatusBadRequest, "Parse to json failed", err.Error())
 		return
@@ -57,8 +57,8 @@ func UserLogin(ctx context.Context) {
 	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd})
 }
 
-func SessCheck(ctx context.Context) {
-	sess := ctx.Params().Get("sess")
+func SessCheck(ctx *gin.Context) {
+	sess := ctx.Param("sess")
 
 	resp, err := storage.GlobalStore.QuerySession(sess)
 	if err != nil {

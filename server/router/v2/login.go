@@ -5,5 +5,5 @@ import (
 )
 
 func login() {
-	api.Post("/login", handlers.UserLogin)
+	api.POST("/login", handlers.UserLogin)
 }
