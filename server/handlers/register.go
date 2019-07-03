@@ -19,7 +19,7 @@ func UserRegiste(ctx *gin.Context) {
 	}
 
 	// save
-	err = storage.GlobalStore.AddUser(*user)
+	err = storage.GlobalStore.AddUser(user)
 	if err != nil {
 		SendResponse(ctx, http.StatusInternalServerError, "save user failed", err.Error())
 		return

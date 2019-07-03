@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	redigo "github.com/gomodule/redigo/redis"
 )
 
 const (
@@ -18,18 +20,24 @@ var (
 )
 
 func (rs *RedisStorage) AddEnergy(uid, energy string) error {
-	ret := rs.RPush(ENERGY_PREFIX+uid, fmt.Sprintf("%s,%d", energy, time.Now().Unix()))
-	if ret.Err() != nil {
-		return ret.Err()
+	client := rs.Get()
+	defer client.Close()
+
+	_, err := client.Do("RPUSH", ENERGY_PREFIX+uid, fmt.Sprintf("%s,%d", energy, time.Now().Unix()))
+	if err != nil {
+		return err
 	}
 
-	rs.ExpireAt(ENERGY_PREFIX+uid, time.Now().Add(SEVEN_DAY))
-	return nil
+	_, err = client.Do("EXPIRE", ENERGY_PREFIX+uid, SEVEN_DAY/time.Second)
+	return err
 }
 
 func (rs *RedisStorage) GetEnergyCount(uid string) int64 {
-	ret := rs.LLen(ENERGY_PREFIX + uid)
-	return ret.Val()
+	client := rs.Get()
+	defer client.Close()
+
+	count, _ := redigo.Int64(client.Do("LLEN", ENERGY_PREFIX+uid))
+	return count
 }
 
 func (rs *RedisStorage) PopEnergy(uid string) (string, error) {
@@ -59,11 +67,16 @@ func (rs *RedisStorage) PopEnergy(uid string) (string, error) {
 }
 
 func (rs *RedisStorage) popOneEnergy(uid string) (string, error) {
-	ret := rs.LPop(ENERGY_PREFIX + uid)
-	return ret.Result()
+	client := rs.Get()
+	defer client.Close()
+
+	return redigo.String(client.Do("LPOP", ENERGY_PREFIX+uid))
 }
 
 func (rs *RedisStorage) ExpireEnergy(uid string) error {
-	ret := rs.ExpireAt(ENERGY_PREFIX+uid, time.Now().Add(SEVEN_DAY))
-	return ret.Err()
+	client := rs.Get()
+	defer client.Close()
+
+	_, err := client.Do("EXPIRE", ENERGY_PREFIX+uid, SEVEN_DAY/time.Second)
+	return err
 }

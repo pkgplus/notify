@@ -19,13 +19,20 @@ func SessionCheck(ctx *gin.Context) {
 		return
 	}
 
-	resp, err := storage.GlobalStore.QuerySession(sid)
+	uid, err := storage.GlobalStore.QuerySession(sid)
 	if err != nil {
 		SendResponse(ctx, http.StatusUnauthorized, "session maybe expired,please login before sending a notice", err.Error())
 		return
 	}
-	ctx.Set(CONTEXT_OPENID_TAG, resp.OpenID)
-	ctx.Set(CONTEXT_UNION_TAG, resp.Unionid)
+
+	u, err := storage.GlobalStore.GetUser(uid)
+	if err != nil {
+		SendResponse(ctx, http.StatusUnauthorized, "read user info failed", err.Error())
+		return
+	}
+
+	ctx.Set(CONTEXT_OPENID_TAG, u.OpenId)
+	ctx.Set(CONTEXT_UNION_TAG, u.UnionId)
 
 	ctx.Next()
 }

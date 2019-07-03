@@ -16,6 +16,7 @@ type LoginReq struct {
 type LoginResp struct {
 	*models.Response
 	Session string `json:"session"`
+	UserID  string `json:"userId"`
 }
 
 func UserLogin(ctx *gin.Context) {
@@ -39,6 +40,9 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
+	// user
+	user_id := sessRet.OpenID
+
 	// create session
 	sess_3rd := sessRet.OpenID
 	// sess_3rd, err := user.GetRandomID(16)
@@ -48,13 +52,24 @@ func UserLogin(ctx *gin.Context) {
 	// }
 
 	// storage
-	err = storage.GlobalStore.SaveSession(sess_3rd, sessRet)
+	err = storage.GlobalStore.UpdateUser(
+		user_id,
+		map[string]interface{}{
+			"openid":  user_id,
+			"unionid": sessRet.Unionid,
+		},
+	)
+	if err != nil {
+		SendResponse(ctx, http.StatusInternalServerError, "save sess_3rd and sessinfo failed", err.Error())
+		return
+	}
+	err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
 	if err != nil {
 		SendResponse(ctx, http.StatusInternalServerError, "save sess_3rd and sessinfo failed", err.Error())
 		return
 	}
 
-	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd})
+	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd, UserID: user_id})
 }
 
 func SessCheck(ctx *gin.Context) {
