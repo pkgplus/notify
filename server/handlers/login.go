@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	//"github.com/satori/go.uuid"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,11 +46,7 @@ func UserLogin(ctx *gin.Context) {
 
 	// create session
 	sess_3rd := sessRet.OpenID
-	// sess_3rd, err := user.GetRandomID(16)
-	// if err != nil {
-	//  SendResponse(ctx, http.StatusInternalServerError, "create 3rd_sess failed", err.Error())
-	//  return
-	// }
+	//sess_3rd := uuid.NewV5(uuid.NamespaceDNS, sessRet.OpenID).String()
 
 	// storage
 	err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
