@@ -1,18 +1,25 @@
 package v1
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/server/handlers"
 )
 
 func user() {
 	// user register
-	api.POST("/users", handlers.UserRegiste)
+	api.POST("/users", handlers.UserRegister)
 
-	// energy
-	api.POST("/users/:uid/energy", handlers.SessionCheck, handlers.AddEnery)
-	api.GET("/users/:uid/energy/count", handlers.SessionCheck, handlers.EneryCount)
-	api.GET("/users/:uid/energy/one", handlers.SessionCheck, handlers.PopEnergy)
+	// user group
+	uGroup := api.Group("/users/:uid")
 
-	// notice
-	api.POST("/users/:uid/notice", handlers.SessionCheck, handlers.SendNotice)
+	// user route
+	for _, g := range []*gin.RouterGroup{api, uGroup} {
+		// energy
+		g.POST("/energy", handlers.SessionCheck, handlers.AddEnery)
+		g.GET("/energy/count", handlers.SessionCheck, handlers.EneryCount)
+		g.GET("/energy/one", handlers.SessionCheck, handlers.PopEnergy)
+
+		// notice
+		g.POST("/notice", handlers.SessionCheck, handlers.SendNotice)
+	}
 }

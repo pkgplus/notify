@@ -8,7 +8,7 @@ import (
 	"github.com/xuebing1110/notify/pkg/storage"
 )
 
-func UserRegiste(ctx *gin.Context) {
+func UserRegister(ctx *gin.Context) {
 	user := new(models.User)
 
 	// request

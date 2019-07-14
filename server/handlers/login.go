@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	//"github.com/satori/go.uuid"
+	"github.com/dgrijalva/jwt-go"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/models"
@@ -19,6 +20,10 @@ type LoginResp struct {
 	Session string `json:"session"`
 	UserID  string `json:"userId"`
 }
+
+var (
+	signingKey = []byte("notify_wx_2019")
+)
 
 func UserLogin(ctx *gin.Context) {
 	lr := new(LoginReq)
@@ -45,15 +50,29 @@ func UserLogin(ctx *gin.Context) {
 	user_id := sessRet.OpenID
 
 	// create session
-	sess_3rd := sessRet.OpenID
-	//sess_3rd := uuid.NewV5(uuid.NamespaceDNS, sessRet.OpenID).String()
-
-	// storage
-	err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
+	now := time.Now()
+	claims := &jwt.StandardClaims{
+		Audience:  "wx",
+		ExpiresAt: now.Add(time.Hour * 24 * 30).Unix(),
+		Issuer:    "notify",
+		Subject:   user_id,
+		IssuedAt:  now.Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	sess_3rd, err := token.SignedString(signingKey)
 	if err != nil {
-		SendResponse(ctx, http.StatusInternalServerError, "save session failed", err.Error())
+		SendResponse(ctx, http.StatusInternalServerError, "sign token failed", err.Error())
 		return
 	}
+	// TODO remove
+	sess_3rd = sessRet.OpenID
+
+	// storage
+	//err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
+	//if err != nil {
+	//	SendResponse(ctx, http.StatusInternalServerError, "save session failed", err.Error())
+	//	return
+	//}
 
 	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd, UserID: user_id})
 }

@@ -5,5 +5,6 @@ import (
 )
 
 func login() {
+	// wechat login
 	api.POST("/login", handlers.UserLogin)
 }
