@@ -20,7 +20,7 @@ RUN go mod download
 
 # build
 COPY . .
-RUN go build -o /app/notify server/cmd/main.go
+RUN go build -o /app/notify cmd/main.go
 
 
 FROM alpine:3.10
