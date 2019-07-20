@@ -22,7 +22,7 @@ func AddEnery(ctx *gin.Context) {
 
 	uid := getUID(ctx)
 	if uid == "" {
-		SendResponse(ctx, http.StatusInternalServerError, "get openid failed", "")
+		SendResponse(ctx, http.StatusInternalServerError, "get uid failed", "")
 		return
 	}
 
@@ -38,7 +38,7 @@ func AddEnery(ctx *gin.Context) {
 func EneryCount(ctx *gin.Context) {
 	uid := getUID(ctx)
 	if uid == "" {
-		SendResponse(ctx, http.StatusInternalServerError, "get openid failed", "")
+		SendResponse(ctx, http.StatusInternalServerError, "get uid failed", "")
 		return
 	}
 
@@ -55,7 +55,7 @@ func EneryCount(ctx *gin.Context) {
 func PopEnergy(ctx *gin.Context) {
 	uid := getUID(ctx)
 	if uid == "" {
-		SendResponse(ctx, http.StatusInternalServerError, "get openid failed", "")
+		SendResponse(ctx, http.StatusInternalServerError, "get uid failed", "")
 		return
 	}
 

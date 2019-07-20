@@ -15,7 +15,7 @@ type RedisStorage struct {
 func init() {
 	// RedisClient
 	addr := os.Getenv("REDIS_ADDR")
-	passwd := os.Getenv("REDIS_PASSWD")
+	passwd := os.Getenv("REDIS_PWD")
 	if addr == "" {
 		addr = "localhost:6379"
 	}

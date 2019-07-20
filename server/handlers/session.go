@@ -45,16 +45,6 @@ func SessionCheck(ctx *gin.Context) {
 	ctx.Next()
 }
 
-func getToken(ctx *gin.Context) string {
-	auth_info := ctx.GetHeader("Authorization")
-	if auth_info != "" {
-		if strings.HasPrefix(auth_info, "Bearer ") {
-			return strings.TrimPrefix(auth_info, "Bearer ")
-		}
-	}
-	return ""
-}
-
 func getUidFromJwt(ctx *gin.Context) (uid string, err error) {
 	ss := getToken(ctx)
 	if ss == "" {
@@ -75,6 +65,16 @@ func getUidFromJwt(ctx *gin.Context) (uid string, err error) {
 	}
 
 	return claims.Subject, nil
+}
+
+func getToken(ctx *gin.Context) string {
+	auth_info := ctx.GetHeader("Authorization")
+	if auth_info != "" {
+		if strings.HasPrefix(auth_info, "Bearer ") {
+			return strings.TrimPrefix(auth_info, "Bearer ")
+		}
+	}
+	return ""
 }
 
 //func GetOpenID(ctx *gin.Context) string {

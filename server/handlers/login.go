@@ -64,8 +64,6 @@ func UserLogin(ctx *gin.Context) {
 		SendResponse(ctx, http.StatusInternalServerError, "sign token failed", err.Error())
 		return
 	}
-	// TODO remove
-	sess_3rd = sessRet.OpenID
 
 	// storage
 	//err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
@@ -77,6 +75,7 @@ func UserLogin(ctx *gin.Context) {
 	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd, UserID: user_id})
 }
 
+// Deprecated
 func SessCheck(ctx *gin.Context) {
 	sess := ctx.Param("sess")
 

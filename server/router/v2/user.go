@@ -19,7 +19,7 @@ func user() {
 		g.GET("/energy/count", handlers.SessionCheck, handlers.EneryCount)
 		g.GET("/energy/one", handlers.SessionCheck, handlers.PopEnergy)
 
-		// notice
-		g.POST("/notice", handlers.SessionCheck, handlers.SendNotice)
+		//// notice
+		//g.POST("/notice", handlers.SessionCheck, handlers.SendNotice)
 	}
 }
