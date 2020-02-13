@@ -18,6 +18,12 @@ import (
 //)
 
 type User struct {
+	ID string `json:"id"`
+
+	*WechatUser
+}
+
+type WechatUser struct {
 	OpenId   string `json:"openid"`
 	UnionId  string `json:"unionid"`
 	NickName string `json:"nickName"`
@@ -28,7 +34,7 @@ type User struct {
 	SubTime  int64  `json:"subTime"`
 }
 
-func (u *User) Get(field string) interface{} {
+func (u *WechatUser) Get(field string) interface{} {
 	values := reflect.ValueOf(u)
 	types := reflect.TypeOf(u)
 	for i := 0; i < types.NumField(); i++ {
@@ -51,11 +57,11 @@ func (u *User) Get(field string) interface{} {
 	return nil
 }
 
-func (u *User) Id() string {
+func (u *WechatUser) Id() string {
 	return u.OpenId
 }
 
-func (u *User) ToMap() map[string]interface{} {
+func (u *WechatUser) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"openid":   u.OpenId,
 		"unionid":  u.UnionId,

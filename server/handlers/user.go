@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"github.com/dgrijalva/jwt-go"
+	"log"
 	"net/http"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/models"
-	"github.com/xuebing1110/notify/pkg/storage"
 	"github.com/xuebing1110/notify/pkg/wechat"
 )
 
@@ -25,7 +25,7 @@ var (
 	signingKey = []byte("notify_wx_2019")
 )
 
-func UserLogin(ctx *gin.Context) {
+func LoginByMiniprogram(ctx *gin.Context) {
 	lr := new(LoginReq)
 
 	// request
@@ -46,44 +46,30 @@ func UserLogin(ctx *gin.Context) {
 		return
 	}
 
+	if sessRet.OpenID == "" || sessRet.Unionid == "" {
+		SendResponse(ctx, http.StatusInternalServerError, "登录失败", "get openID")
+		return
+	}
+
 	// user
-	user_id := sessRet.OpenID
+	log.Printf("%+v", sessRet)
+	user_id := sessRet.Unionid
 
 	// create session
 	now := time.Now()
 	claims := &jwt.StandardClaims{
-		Audience:  "wx",
+		Audience:  "miniprogram",
 		ExpiresAt: now.Add(time.Hour * 24 * 30).Unix(),
 		Issuer:    "notify",
 		Subject:   user_id,
 		IssuedAt:  now.Unix(),
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	sess_3rd, err := token.SignedString(signingKey)
+
+	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(signingKey)
 	if err != nil {
 		SendResponse(ctx, http.StatusInternalServerError, "sign token failed", err.Error())
 		return
 	}
 
-	// storage
-	//err = storage.GlobalStore.SaveSession(sess_3rd, user_id)
-	//if err != nil {
-	//	SendResponse(ctx, http.StatusInternalServerError, "save session failed", err.Error())
-	//	return
-	//}
-
-	SendNormalResponse(ctx, &LoginResp{Session: sess_3rd, UserID: user_id})
-}
-
-// Deprecated
-func SessCheck(ctx *gin.Context) {
-	sess := ctx.Param("sess")
-
-	resp, err := storage.GlobalStore.QuerySession(sess)
-	if err != nil {
-		SendResponse(ctx, http.StatusInternalServerError, "check session failed", err.Error())
-		return
-	}
-
-	SendNormalResponse(ctx, resp)
+	SendNormalResponse(ctx, token)
 }

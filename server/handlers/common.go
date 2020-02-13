@@ -11,6 +11,9 @@ func SendResponse(ctx *gin.Context, code int, msg, detail string) {
 		Message: msg,
 		Detail:  detail,
 	}
+	if resp.Code >= 400 {
+		ctx.Abort()
+	}
 	ctx.JSON(resp.Code, resp)
 }
 

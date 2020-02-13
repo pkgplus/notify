@@ -27,3 +27,5 @@ replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20190513172903-22
 replace golang.org/x/sys => github.com/golang/sys v0.0.0-20190222072716-a9d3bda3a223
 
 replace golang.org/x/text => github.com/golang/text v0.3.0
+
+go 1.13

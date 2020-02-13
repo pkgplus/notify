@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pkg/errors"
+	"log"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xuebing1110/notify/pkg/storage"
 )
 
 const (
@@ -16,31 +16,23 @@ const (
 	CONTEXT_UNION_TAG  = "UnionID"
 )
 
-func SessionCheck(ctx *gin.Context) {
-	var err error
-	uid := ctx.Param("uid")
-	if uid == "" {
-		uid, err = getUidFromJwt(ctx)
-		if err != nil {
-			SendResponse(ctx, http.StatusUnauthorized, "get uid failed", "")
-			return
-		}
-	}
-
-	//uid, err := storage.GlobalStore.QuerySession(sid)
-	//if err != nil {
-	//	SendResponse(ctx, http.StatusUnauthorized, "session maybe expired,please login before sending a notice", err.Error())
-	//	return
-	//}
-
-	u, err := storage.GlobalStore.GetUser(uid)
+func AuthN(ctx *gin.Context) {
+	uid, err := getUidFromJwt(ctx)
 	if err != nil {
-		SendResponse(ctx, http.StatusUnauthorized, "read user info failed", err.Error())
+		SendResponse(ctx, http.StatusUnauthorized, "用户未登录，请重新登录", "")
+		ctx.Abort()
 		return
 	}
 
-	ctx.Set(CONTEXT_OPENID_TAG, u.OpenId)
-	ctx.Set(CONTEXT_UNION_TAG, u.UnionId)
+	//u, err := storage.GlobalStore.GetUser(uid)
+	//if err != nil {
+	//	SendResponse(ctx, http.StatusUnauthorized, "read user info failed", err.Error())
+	//	return
+	//}
+
+	ctx.Set(CONTEXT_UNION_TAG, uid)
+	//ctx.Set(CONTEXT_OPENID_TAG, u.OpenId)
+	//ctx.Set(CONTEXT_UNION_TAG, u.UnionId)
 
 	ctx.Next()
 }
@@ -64,6 +56,7 @@ func getUidFromJwt(ctx *gin.Context) (uid string, err error) {
 		return "", errors.Wrap(err, "jwt invalid")
 	}
 
+	log.Printf("%+v", claims)
 	return claims.Subject, nil
 }
 
@@ -91,5 +84,8 @@ func GetUID(ctx *gin.Context) string {
 
 func getUID(ctx *gin.Context) (uid string) {
 	// uid = ctx.GetString(CONTEXT_UNION_TAG)
-	return ctx.GetString(CONTEXT_OPENID_TAG)
+	if ctx.Param("uid") != "" {
+		return ctx.Param("uid")
+	}
+	return ctx.GetString(CONTEXT_UNION_TAG)
 }
