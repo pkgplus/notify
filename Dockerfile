@@ -1,4 +1,4 @@
-FROM golang:1.13.8-alpine3.10 as build-env
+FROM golang:1.13.7-alpine3.10 as build-env
 
 # repo
 RUN cp /etc/apk/repositories /etc/apk/repositories.bak
