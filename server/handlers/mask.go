@@ -97,7 +97,7 @@ func ReserveMask(ctx *gin.Context) {
 
 	err := mask.DealReserveRequest(ctx, uid, req)
 	if err != nil {
-		SendResponse(ctx, http.StatusBadRequest, "提交失败请重试", err.Error())
+		SendResponse(ctx, http.StatusBadRequest, err.Error(), err.Error())
 		return
 	}
 	SendNormalResponse(ctx, "预约成功，请等待短信通知")
