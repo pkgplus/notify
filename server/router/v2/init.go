@@ -17,6 +17,7 @@ func init() {
 		{
 			maskBase.GET("/captcha", handlers.GetCaptcha)
 			maskBase.GET("/stores", handlers.ListMaskStores)
+			maskBase.GET("/stores/:sid", handlers.GetMaskStore)
 		}
 
 		maskWithAuth := maskBase.Group("", handlers.AuthN)

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/xuebing1110/notify/pkg/models"
 	"github.com/xuebing1110/notify/service/mask"
@@ -9,6 +10,24 @@ import (
 
 func ListMaskStores(ctx *gin.Context) {
 	SendNormalResponse(ctx, mask.ListMaskStores())
+}
+
+func GetMaskStore(ctx *gin.Context) {
+	sid := ctx.Param("sid")
+	ms, err := mask.GetMaskStoreInventory(ctx)
+	if err != nil {
+		SendResponse(ctx, http.StatusInternalServerError, "查询剩余量失败", err.Error())
+		return
+	}
+
+	var maskStore *models.MaskStore
+	for _, m := range ms {
+		if fmt.Sprintf("%d", m.ID) == sid {
+			maskStore = m
+			break
+		}
+	}
+	SendNormalResponse(ctx, maskStore)
 }
 
 func AddContact(ctx *gin.Context) {
@@ -100,5 +119,6 @@ func ReserveMask(ctx *gin.Context) {
 		SendResponse(ctx, http.StatusBadRequest, err.Error(), err.Error())
 		return
 	}
-	SendNormalResponse(ctx, "预约成功，请等待短信通知")
+	//SendNormalResponse(ctx, "预约成功，请等待短信通知")
+	SendResponse(ctx, http.StatusOK, "预约成功，请等待短信通知", "")
 }

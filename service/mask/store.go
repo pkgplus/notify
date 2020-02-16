@@ -82,7 +82,7 @@ func readMaskStoreInventoryFromCache() []*models.MaskStore {
 	mutex.RLock()
 	defer mutex.RUnlock()
 
-	if time.Now().Sub(lastQuerySucTime) < 10*time.Second {
+	if time.Now().Sub(lastQuerySucTime) < 3*time.Second {
 		return cacheMasStore
 	}
 
@@ -98,7 +98,6 @@ func resetCacheMasStore(ms []*models.MaskStore) {
 }
 
 func getMaskStoreInventory(ctx context.Context) ([]*models.MaskStore, error) {
-
 	req, err := http.NewRequest(http.MethodGet, URL_MASK_COUNT, nil)
 	if err != nil {
 		return nil, err
@@ -143,7 +142,7 @@ const (
         "orgcode": "91370212730621124B",
         "name": "国风大药房永顺药店",
         "id": 105,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -151,7 +150,7 @@ const (
         "orgcode": "91370203706459083J",
         "name": "国风大药房中华药店",
         "id": 106,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "李沧区",
@@ -159,7 +158,7 @@ const (
         "orgcode": "91370213863913606W",
         "name": "国风大药房崂山药店",
         "id": 107,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -167,7 +166,7 @@ const (
         "orgcode": "913702037334986276",
         "name": "国风大药房国风药店",
         "id": 108,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -175,7 +174,7 @@ const (
         "orgcode": "91370202770270007T      ",
         "name": "百姓阳光大药房一分店",
         "id": 109,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -183,7 +182,7 @@ const (
         "orgcode": "91370203675262981C      ",
         "name": "百姓阳光大药房二十三分店",
         "id": 110,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "胶州市",
@@ -191,7 +190,7 @@ const (
         "orgcode": "9137028107328733XX",
         "name": "百姓阳光大药房五十八分店",
         "id": 111,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -199,7 +198,7 @@ const (
         "orgcode": "913702135757790196        ",
         "name": "百姓阳光大药房三十七分店",
         "id": 112,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -207,7 +206,7 @@ const (
         "orgcode": "91370203MA3D5W7L5E",
         "name": "青岛漱玉平民大药房第二十一分店",
         "id": 113,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -215,7 +214,7 @@ const (
         "orgcode": "91370202MA3D5T5F51",
         "name": "青岛漱玉平民大药房第七十分店",
         "id": 114,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -223,7 +222,7 @@ const (
         "orgcode": "91370202MA3D5T9M87",
         "name": "青岛漱玉平民大药房第四十八分店",
         "id": 115,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "李沧区",
@@ -231,7 +230,7 @@ const (
         "orgcode": "91370213MA3D6A792Y",
         "name": "青岛漱玉平民大药房第三十五分店",
         "id": 116,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "平度市",
@@ -239,7 +238,7 @@ const (
         "orgcode": "91370281MA3BXRKL5G",
         "name": "青岛修和堂药业有限公司二十分店",
         "id": 117,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "平度市",
@@ -247,7 +246,7 @@ const (
         "orgcode": "91370283334056004M",
         "name": "青岛修和堂药业有限公司十八分店",
         "id": 118,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "黄岛区",
@@ -255,7 +254,7 @@ const (
         "orgcode": "91370211MA5C45UR0P",
         "name": "青岛修和堂药业有限公司十七分店",
         "id": 119,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "黄岛区",
@@ -263,7 +262,7 @@ const (
         "orgcode": "91370211MA3C4ACU45",
         "name": "青岛修和堂药业有限公司八十三分店",
         "id": 120,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -271,7 +270,7 @@ const (
         "orgcode": "91370214766717451L",
         "name": "同方第二连锁店",
         "id": 121,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -279,7 +278,7 @@ const (
         "orgcode": "9137021466126461XC",
         "name": "同方第八十二连锁店",
         "id": 122,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "黄岛区",
@@ -287,7 +286,7 @@ const (
         "orgcode": "91370211MA3F3PPR03",
         "name": "同方280店",
         "id": 123,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "即墨区",
@@ -295,7 +294,7 @@ const (
         "orgcode": "91370282MA3D7XUH2P",
         "name": "同方208店",
         "id": 124,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "胶州市",
@@ -303,7 +302,7 @@ const (
         "orgcode": "9137028169376722XW",
         "name": "同方第九十七连锁店",
         "id": 125,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "莱西市",
@@ -311,7 +310,7 @@ const (
         "orgcode": "91370285MA3EUY1N6M",
         "name": "同方382店",
         "id": 126,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -319,7 +318,7 @@ const (
         "orgcode": "9137021470646291X2",
         "name": "青岛家佳源（城阳）购物中心有限公司",
         "id": 127,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "即墨区",
@@ -327,7 +326,7 @@ const (
         "orgcode": "9137028256470779X5",
         "name": "青岛家佳源（即墨）购物中心有限公司",
         "id": 128,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -335,7 +334,7 @@ const (
         "orgcode": "913702001635845060",
         "name": "青岛华联商厦股份有限公司",
         "id": 129,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -343,7 +342,7 @@ const (
         "orgcode": "913702007306189537",
         "name": "丽达中山路店",
         "id": 130,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "崂山区",
@@ -351,7 +350,7 @@ const (
         "orgcode": "913702006825570597",
         "name": "丽达崂山店",
         "id": 131,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "李沧区",
@@ -359,7 +358,7 @@ const (
         "orgcode": "91370213MA3DQENL2P",
         "name": "丽达绿城店",
         "id": 132,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -367,7 +366,7 @@ const (
         "orgcode": "91370203321432955E",
         "name": "丽达延安三路店",
         "id": 133,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -375,7 +374,7 @@ const (
         "orgcode": "91370214733496939X",
         "name": "丽达城阳店",
         "id": 134,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "胶州市",
@@ -383,7 +382,7 @@ const (
         "orgcode": "9137028172404966XP",
         "name": "丽达胶州店",
         "id": 135,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -391,7 +390,7 @@ const (
         "orgcode": "91370200725550149T",
         "name": "大润发集团",
         "id": 136,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -399,7 +398,7 @@ const (
         "orgcode": "91370214717867795B",
         "name": "大润发集团",
         "id": 137,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "即墨区",
@@ -407,7 +406,7 @@ const (
         "orgcode": "9137020071788240XD",
         "name": "大润发集团",
         "id": 138,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "平度市",
@@ -415,7 +414,7 @@ const (
         "orgcode": "913702006903383743",
         "name": "大润发集团",
         "id": 139,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "胶州市",
@@ -423,7 +422,7 @@ const (
         "orgcode": "913702815577029589",
         "name": "大润发集团",
         "id": 140,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "李沧区",
@@ -431,7 +430,7 @@ const (
         "orgcode": "91370200163921867G",
         "name": "青岛利客来集团股份有限公司购物中心A座超市",
         "id": 141,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "城阳区",
@@ -439,7 +438,7 @@ const (
         "orgcode": "913702145577388383",
         "name": "青岛利客来集团城阳购物广场",
         "id": 142,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -447,7 +446,7 @@ const (
         "orgcode": "91370200693790083H",
         "name": "青岛悦喜客来中山购物有限公司",
         "id": 143,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "莱西市",
@@ -455,7 +454,7 @@ const (
         "orgcode": "913702857372994812",
         "name": "青岛利客来集团莱西购物有限公司",
         "id": 144,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "平度市",
@@ -463,7 +462,7 @@ const (
         "orgcode": "91370283794046368B",
         "name": "青岛利客来集团平度购物有限公司",
         "id": 145,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "崂山区",
@@ -471,7 +470,7 @@ const (
         "orgcode": "91370212MA3R5EF40N",
         "name": "利群金鼎广场",
         "id": 146,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -479,7 +478,7 @@ const (
         "orgcode": "91370200760291787J",
         "name": "利群商厦",
         "id": 147,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "即墨区",
@@ -487,7 +486,7 @@ const (
         "orgcode": "91370282718013054R",
         "name": "利群集团即墨商厦",
         "id": 148,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "胶州市",
@@ -495,7 +494,7 @@ const (
         "orgcode": "91370281693781355F",
         "name": "利群胶州购物广场",
         "id": 149,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "黄岛区",
@@ -503,7 +502,7 @@ const (
         "orgcode": "913702116752587123",
         "name": "胶南购物中心",
         "id": 150,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "莱西市",
@@ -511,7 +510,7 @@ const (
         "orgcode": "91370285086488907K",
         "name": "利群莱西购物广场",
         "id": 151,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "平度市",
@@ -519,7 +518,7 @@ const (
         "orgcode": "9137028379081901XG",
         "name": "北方国贸购物中心（平度店）",
         "id": 152,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市南区",
@@ -527,7 +526,7 @@ const (
         "orgcode": "92370202MA3PXHDX49",
         "name": "齐脉健康管理中心",
         "id": 153,
-        "kznum": 0
+        "kznum": -1
       },
       {
         "area": "市北区",
@@ -535,7 +534,7 @@ const (
         "orgcode": "91370203MA3CMMX892",
         "name": "青岛品质生活百货商店",
         "id": 154,
-        "kznum": 0
+        "kznum": -1
       }
     ]`
 )
