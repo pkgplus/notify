@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: rtbus
+  IMAGE_NAME: notify
 
 jobs:
   # Build and push image to Aliyun Container Registry.
