@@ -1,31 +1,22 @@
-module github.com/xuebing1110/notify
+module github.com/pkgplus/notify
 
 require (
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/bingbaba/storage v0.0.0-20200122082349-93cbc6de5c86
+	github.com/chanxuehong/rand v0.0.0-20180830053958-4b3aff17f488 // indirect
+	github.com/chanxuehong/util v0.0.0-20181116100727-caf892acd09c // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/esap/wechat v1.0.0
-	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.3.0
-	github.com/golang/protobuf v1.3.1 // indirect
-	github.com/gomodule/redigo v2.0.0+incompatible
-	github.com/json-iterator/go v1.1.6 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.1 // indirect
-	github.com/pkg/errors v0.8.1
-	github.com/ugorji/go v1.1.7 // indirect
-	golang.org/x/net v0.0.0-20190628185345-da137c7871d7 // indirect
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
-	gopkg.in/yaml.v2 v2.2.2 // indirect
+	github.com/gin-gonic/gin v1.5.0
+	github.com/go-openapi/spec v0.19.6 // indirect
+	github.com/go-openapi/swag v0.19.7 // indirect
+	github.com/haier-interx/gogin v0.0.0-20200114094650-68fb79defdd9
+	github.com/mailru/easyjson v0.7.0 // indirect
+	github.com/swaggo/gin-swagger v1.2.0
+	github.com/swaggo/swag v1.6.5
+	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
+	golang.org/x/tools v0.0.0-20200214225126-5916a50871fb // indirect
+	gopkg.in/chanxuehong/wechat.v2 v2.0.0-20180924084534-7e0579cb5377
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
-
-replace github.com/ugorji/go => github.com/ugorji/go-codec v1.1.4
-
-replace golang.org/x/net => github.com/golang/net v0.0.0-20190628185345-da137c7871d7
-
-replace golang.org/x/crypto => github.com/golang/crypto v0.0.0-20190513172903-22d7a77e9e5f
-
-replace golang.org/x/sys => github.com/golang/sys v0.0.0-20190222072716-a9d3bda3a223
-
-replace golang.org/x/text => github.com/golang/text v0.3.0
 
 go 1.13

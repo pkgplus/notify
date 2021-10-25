@@ -3,8 +3,8 @@ package mask
 import (
 	"context"
 	"fmt"
-	"github.com/xuebing1110/notify/pkg/client"
-	"github.com/xuebing1110/notify/pkg/models"
+	"github.com/pkgplus/notify/pkg/client"
+	"github.com/pkgplus/notify/pkg/models"
 	"io/ioutil"
 	"net/http"
 )

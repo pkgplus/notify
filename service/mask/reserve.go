@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/xuebing1110/notify/pkg/client"
-	"github.com/xuebing1110/notify/pkg/models"
+	"github.com/pkgplus/notify/pkg/client"
+	"github.com/pkgplus/notify/pkg/models"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,10 +16,14 @@ const (
 	URL_RESERVE = "http://kzyynew.qingdao.gov.cn:81/kz/addYdorder"
 )
 
-func DealReserveRequest(ctx context.Context, uid string, rr *models.ReserveRequest) error {
-	u, err := GetContact(uid, rr.Contact)
-	if err != nil {
-		return err
+func DealReserveRequest(ctx context.Context, uid string, rr *models.ReserveRequest) (err error) {
+	var u *models.MaskUserInfo
+	if rr.ContactInfo != nil {
+		u = rr.ContactInfo
+	} else {
+		if u, err = GetContact(ctx, uid, rr.Contact); err != nil {
+			return
+		}
 	}
 
 	if rr.MaskStore == nil {

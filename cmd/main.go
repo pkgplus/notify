@@ -1,22 +1,24 @@
 package main
 
 import (
-	"os"
-
-	"github.com/xuebing1110/notify/server/app"
-
-	_ "github.com/xuebing1110/notify/pkg/storage/redis"
-	_ "github.com/xuebing1110/notify/server/router/v2"
+	cos "github.com/bingbaba/storage/qcloud-cos"
+	"github.com/pkgplus/notify/router"
+	"github.com/pkgplus/notify/storage"
+	"log"
 )
 
+func init() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Lshortfile)
+
+	storage.Init(cos.NewStorage(cos.NewConfigByEnv()))
+}
+
+// @title Tracelog API
+// @version 1.0
+// @description tracelog
+// @termsOfService http://127.0.0.1:8080
+// @license.name MIT
 func main() {
-	// http server
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	addr := ":" + port
-	app.GetApp().Run(addr)
+	router.Run()
 }

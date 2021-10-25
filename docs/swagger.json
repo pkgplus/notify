@@ -1,0 +1,14 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "tracelog",
+        "title": "Tracelog API",
+        "termsOfService": "http://127.0.0.1:8080",
+        "contact": {},
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0"
+    },
+    "paths": {}
+}

@@ -1,0 +1,10 @@
+info:
+  contact: {}
+  description: tracelog
+  license:
+    name: MIT
+  termsOfService: http://127.0.0.1:8080
+  title: Tracelog API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
