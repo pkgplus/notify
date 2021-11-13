@@ -29,20 +29,29 @@ jobs:
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
       - name: Log into registry
-        run: echo "${{ secrets.ALIYUN_REGISTRY_PWD }}" | docker login registry.cn-hangzhou.aliyuncs.com -u ${{ secrets.ALIYUN_REGISTRY_USER }} --password-stdin
+        run: |
+          echo "${{ secrets.ALIYUN_REGISTRY_PWD }}" | docker login registry.cn-hangzhou.aliyuncs.com -u ${{ secrets.ALIYUN_REGISTRY_USER }} --password-stdin
+          echo "${{ secrets.TENCENT_REGISTRY_PWD }}" | docker login ccr.ccs.tencentyun.com -u ${{ secrets.TENCENT_REGISTRY_USER }} --password-stdin
 
       - name: Push image
         run: |
-          IMAGE_ID=registry.cn-hangzhou.aliyuncs.com/${{ github.repository }}
+          IMAGE_ID_ALIYUN=registry.cn-hangzhou.aliyuncs.com/${{ github.repository }}
+          IMAGE_ID_TENCENT=ccr.ccs.tencentyun.com/${{ github.repository }}
+
           # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          IMAGE_ID_ALIYUN=$(echo $IMAGE_ID_ALIYUN | tr '[A-Z]' '[a-z]')
+          IMAGE_ID_TENCENT=$(echo $IMAGE_ID_TENCENT | tr '[A-Z]' '[a-z]')
+
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
           # Use Docker `latest` tag convention
           [ "$VERSION" == "master" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID_ALIYUN:$VERSION
+          docker push $IMAGE_ID_ALIYUN:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID_TENCENT:$VERSION
+          docker push $IMAGE_ID_TENCENT:$VERSION
